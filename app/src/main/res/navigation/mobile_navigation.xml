@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navAdd">
+
+    <fragment
+        android:id="@+id/navAdd"
+        android:name="com.example.exptrcandroid.ui.home.HomeFragment"
+        android:label="Add Expense"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navShow"
+        android:name="com.example.exptrcandroid.ui.gallery.GalleryFragment"
+        android:label="Expenses"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/navStatus"
+        android:name="com.example.exptrcandroid.ui.slideshow.SlideshowFragment"
+        android:label="Stats"
+        tools:layout="@layout/fragment_slideshow" />
+</navigation>

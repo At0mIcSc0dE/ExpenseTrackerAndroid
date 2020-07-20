@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <Button
+        android:id="@+id/btnAddExp"
+        android:layout_width="148dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:onClick="OnAddExpClick"
+        android:text="Add Expense"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radGroup" />
+
+    <RadioGroup
+        android:id="@+id/radGroup"
+        android:layout_width="369dp"
+        android:layout_height="257dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddExp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtExpPrice"
+        app:layout_constraintVertical_bias="0.482">
+
+        <RadioButton
+            android:id="@+id/radOneTimeExp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="One-Time Expense" />
+
+        <RadioButton
+            android:id="@+id/radMonthExp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Monthly Expense" />
+
+        <RadioButton
+            android:id="@+id/radOneTimeTak"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="One-Time Taking" />
+
+        <RadioButton
+            android:id="@+id/radMonthTak"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Monthly Taking" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/txtExpName"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="64dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Name" />
+
+    <EditText
+        android:id="@+id/txtExpPrice"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtExpName"
+        tools:text="Price" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
