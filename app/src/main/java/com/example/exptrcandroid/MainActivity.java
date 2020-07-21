@@ -1,7 +1,9 @@
 package com.example.exptrcandroid;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +23,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private String m_ExpNameText;
+    private double m_ExpPriceText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -66,15 +75,27 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-
-    public void OnAddExpClick(View view)
+    public void OnAddExpClick(View view) throws IOException
     {
-//        final LayoutInflater factory = getLayoutInflater();
-//        final View textEntryView = factory.inflate(R.layout.fragment_home, null);
-
         view = getLayoutInflater().inflate(R.layout.fragment_home, null, false);
 
-        EditText txtExpName = view.findViewById(R.id.txtExpName);
-        Editable s = txtExpName.getText();
+//        JSON json = new JSON();
     }
+
+    public void OnTxtExpNameClick(View view) throws IOException
+    {
+        EditText txtExpName = (EditText)view;
+        m_ExpNameText = txtExpName.getText().toString();
+        JSON json = new JSON();
+        json.Write(m_ExpNameText);
+    }
+
+    public void OnTxtExpPriceClick(View view) throws IOException
+    {
+        EditText txtExpPrice = (EditText) view;
+        m_ExpPriceText = Double.parseDouble(txtExpPrice.getText().toString());
+        JSON json = new JSON();
+        json.Write(txtExpPrice.getText().toString());
+    }
+
 }
