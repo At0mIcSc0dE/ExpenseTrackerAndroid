@@ -26,6 +26,9 @@ import java.util.Calendar;
 
 /***************************************
  * try{ ri.thread.join(); } catch(InterruptedException e) { throw new RuntimeException(e); }
+ *
+ * Bug where Adding it on the phone and then deleting it on the PC only increments the bank balance
+ * Solution: Calculate and update it here, too
 /***************************************/
 
 public class MainActivity extends AppCompatActivity {
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     public void OnAddExpClick(View view) throws IOException, InterruptedException
     {
         Calendar calendar = Calendar.getInstance();
-        ExpenseData expenseData = new ExpenseData(m_ExpNameText , m_ExpPriceText, "", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+        ExpenseData expenseData = new ExpenseData(m_ExpNameText , m_ExpPriceText, "", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
         ri.thread.join();
         ri.fm.WriteExpense(rbChecked, expenseData);
     }

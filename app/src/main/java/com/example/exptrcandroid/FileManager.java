@@ -176,21 +176,25 @@ public class FileManager {
                 m_OneTimeExpData = AddDataToMap(data, m_OneTimeExpData);
                 Write(m_FilePath1, m_OneTimeExpData);
                 ++m_GeneralData.CurrOneTimeExpCount;
+                m_GeneralData.balance -= data.Price;
                 break;
             case 2:
                 m_MonthlyExpData = AddDataToMap(data, m_MonthlyExpData);
                 Write(m_FilePath2, m_MonthlyExpData);
                 ++m_GeneralData.CurrMonthlyExpCount;
+                m_GeneralData.balance -= data.Price;
                 break;
             case 3:
                 m_OneTimeTakData = AddDataToMap(data, m_OneTimeTakData);
                 Write(m_FilePath3, m_OneTimeTakData);
                 ++m_GeneralData.CurrOneTimeTakCount;
+                m_GeneralData.balance += data.Price;
                 break;
             case 4:
                 m_MonthlyTakData = AddDataToMap(data, m_MonthlyTakData);
                 Write(m_FilePath4, m_MonthlyTakData);
                 ++m_GeneralData.CurrMonthlyTakCount;
+                m_GeneralData.balance += data.Price;
                 break;
         }
         WriteGeneral();
