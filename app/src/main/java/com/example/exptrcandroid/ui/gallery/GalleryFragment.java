@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.exptrcandroid.JSON;
 import com.example.exptrcandroid.R;
 
 import java.io.IOException;

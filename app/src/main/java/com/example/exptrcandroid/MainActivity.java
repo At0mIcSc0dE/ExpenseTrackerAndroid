@@ -23,7 +23,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONException;
+import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.UnknownHostException;
+
+import jcifs.smb.SmbException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,27 +82,24 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void OnAddExpClick(View view) throws IOException
+    public void OnAddExpClick(View view) throws SmbException, MalformedURLException, UnknownHostException, IOException
     {
-        view = getLayoutInflater().inflate(R.layout.fragment_home, null, false);
+//        view = getLayoutInflater().inflate(R.layout.fragment_home, null, false);
 
-//        JSON json = new JSON();
+        FileManager fm = new FileManager("smb://192.168.178.45/share/ExpTrc/OneTimeExpenses.exptrc", "0", "0", "0", "0");
+
     }
 
     public void OnTxtExpNameClick(View view) throws IOException
     {
         EditText txtExpName = (EditText)view;
         m_ExpNameText = txtExpName.getText().toString();
-        JSON json = new JSON();
-        json.Write(m_ExpNameText);
     }
 
     public void OnTxtExpPriceClick(View view) throws IOException
     {
         EditText txtExpPrice = (EditText) view;
         m_ExpPriceText = Double.parseDouble(txtExpPrice.getText().toString());
-        JSON json = new JSON();
-        json.Write(txtExpPrice.getText().toString());
     }
 
 }
