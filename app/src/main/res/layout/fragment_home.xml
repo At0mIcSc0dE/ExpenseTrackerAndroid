@@ -35,24 +35,29 @@
             android:id="@+id/radOneTimeExp"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:checked="true"
+            android:onClick="OnRb1Click"
             android:text="One-Time Expense" />
 
         <RadioButton
             android:id="@+id/radMonthExp"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:onClick="OnRb2Click"
             android:text="Monthly Expense" />
 
         <RadioButton
             android:id="@+id/radOneTimeTak"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:onClick="OnRb3Click"
             android:text="One-Time Taking" />
 
         <RadioButton
             android:id="@+id/radMonthTak"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:onClick="OnRb4Click"
             android:text="Monthly Taking" />
     </RadioGroup>
 
