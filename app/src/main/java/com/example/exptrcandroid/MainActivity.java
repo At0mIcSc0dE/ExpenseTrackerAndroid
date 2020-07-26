@@ -3,6 +3,7 @@ package com.example.exptrcandroid;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private RI ri;
     private int rbChecked = 1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -72,6 +74,17 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+//        final EditText txtExpName = (EditText) findViewById(R.id.txtExpName);
+//        final EditText txtExpPrice = (EditText) findViewById(R.id.txtExpPrice);
+//        txtExpName.setOnKeyListener(new View.OnKeyListener() {
+//
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                txtExpPrice.requestFocus();
+//                return false;
+//            }
+//        });
+
     }
 
     @Override
@@ -92,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Calendar calendar = Calendar.getInstance();
         ExpenseData expenseData = new ExpenseData(m_ExpNameText , m_ExpPriceText, "", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+
         ri.thread.join();
         ri.fm.WriteExpense(rbChecked, expenseData);
     }

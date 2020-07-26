@@ -1,14 +1,12 @@
 package com.example.exptrcandroid;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import jcifs.smb.SmbException;
+import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileInputStream;
 import jcifs.smb.SmbFileOutputStream;
 
@@ -26,7 +24,6 @@ public class FileManager {
     public HashMap<Integer, Vector<String>> m_MonthlyTakData;
 
     public GeneralData m_GeneralData;
-
 
     public FileManager(String filePath1, String filePath2, String filePath3, String filePath4, String filePathG) throws IOException
     {
@@ -54,7 +51,21 @@ public class FileManager {
     {
         Vector<String> lines = new Vector<>();
         Vector<Character> charArr = new Vector<>();
-        SmbFileInputStream reader = new SmbFileInputStream(filePath);
+
+        SmbFile file = new SmbFile(filePath);
+        SmbFileInputStream reader;
+        while(true)
+        {
+            try
+            {
+                reader = new SmbFileInputStream(file);
+                break;
+            }
+            catch (IOException e)
+            {
+                System.out.println("Awaiting connection");
+            }
+        }
 
         int readChar = 0;
         while((readChar = reader.read()) != -1)

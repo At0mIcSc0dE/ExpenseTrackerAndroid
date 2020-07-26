@@ -1,6 +1,12 @@
 package com.example.exptrcandroid;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+
 import java.io.IOException;
 
 public class RI implements Runnable
@@ -32,4 +38,5 @@ public class RI implements Runnable
             thread = new Thread(this, threadName);
         thread.start();
     }
+
 }
