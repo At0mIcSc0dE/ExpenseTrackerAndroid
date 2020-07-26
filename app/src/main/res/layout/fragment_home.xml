@@ -92,7 +92,6 @@
         android:layout_width="357dp"
         android:layout_height="43dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="Awaiting Connection to File Server..."
         app:layout_constraintBottom_toTopOf="@+id/txtExpName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

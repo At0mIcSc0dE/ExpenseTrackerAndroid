@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
         txtExpPrice = root.findViewById(R.id.txtExpPrice);
         txtExpName = root.findViewById(R.id.txtExpName);
         lblStatus = root.findViewById(R.id.lblStatus);
+        lblStatus.setText("Awaiting Connection to File Server...");
 
         mRoot = root;
         return root;
