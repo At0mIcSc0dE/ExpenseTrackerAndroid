@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.example.exptrcandroid.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -35,8 +36,6 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private String m_ExpNameText;
-    private double m_ExpPriceText;
     private RI ri;
     private int rbChecked = 1;
 
@@ -74,16 +73,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-//        final EditText txtExpName = (EditText) findViewById(R.id.txtExpName);
-//        final EditText txtExpPrice = (EditText) findViewById(R.id.txtExpPrice);
-//        txtExpName.setOnKeyListener(new View.OnKeyListener() {
-//
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                txtExpPrice.requestFocus();
-//                return false;
-//            }
-//        });
 
     }
 
@@ -104,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     public void OnAddExpClick(View view) throws IOException, InterruptedException
     {
         Calendar calendar = Calendar.getInstance();
-        ExpenseData expenseData = new ExpenseData(m_ExpNameText , m_ExpPriceText, "", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+        ExpenseData expenseData = new ExpenseData(HomeFragment.txtExpName.getText().toString() , Double.parseDouble(HomeFragment.txtExpPrice.getText().toString()), "", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
 
         ri.thread.join();
         ri.fm.WriteExpense(rbChecked, expenseData);
@@ -112,15 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnTxtExpNameClick(View view)
     {
-        EditText txtExpName = (EditText)view;
-        m_ExpNameText = txtExpName.getText().toString();
-        hideKeyboard(this);
+        HomeFragment.txtExpPrice.requestFocus();
     }
 
     public void OnTxtExpPriceClick(View view)
     {
-        EditText txtExpPrice = (EditText) view;
-        m_ExpPriceText = Double.parseDouble(txtExpPrice.getText().toString());
         hideKeyboard(this);
     }
 

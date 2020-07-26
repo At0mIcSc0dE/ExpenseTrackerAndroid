@@ -22,6 +22,9 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+    static public EditText txtExpPrice;
+    static public EditText txtExpName;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +38,10 @@ public class HomeFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
+
+        txtExpPrice = root.findViewById(R.id.txtExpPrice);
+        txtExpName = root.findViewById(R.id.txtExpName);
+
         return root;
     }
 }
