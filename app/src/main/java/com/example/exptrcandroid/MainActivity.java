@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.exptrcandroid.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -55,14 +58,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -75,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
 
     }
 
@@ -93,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private void AwaitConnection(String filePath) throws IOException
+    static public void AwaitConnection(String filePath) throws IOException
     {
         SmbFile file = new SmbFile(filePath);
         SmbFileInputStream reader;
@@ -115,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnAddExpClick(View view) throws IOException, InterruptedException
     {
+        if(HomeFragment.txtExpName.getText().toString().isEmpty() || HomeFragment.txtExpPrice.getText().toString().isEmpty())
+            return;
+
         Calendar calendar = Calendar.getInstance();
         ExpenseData expenseData = new ExpenseData(HomeFragment.txtExpName.getText().toString() , Double.parseDouble(HomeFragment.txtExpPrice.getText().toString()), "", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
 

@@ -1,5 +1,13 @@
 package com.example.exptrcandroid;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import com.example.exptrcandroid.ui.home.HomeFragment;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,6 +57,7 @@ public class FileManager {
 
     private Vector<String> GetLines(String filePath) throws IOException
     {
+
         Vector<String> lines = new Vector<>();
         Vector<Character> charArr = new Vector<>();
 
@@ -63,7 +72,6 @@ public class FileManager {
             }
             catch (IOException e)
             {
-                System.out.println("Awaiting connection");
             }
         }
 
@@ -240,14 +248,11 @@ public class FileManager {
         WriteGeneral();
     }
 
-    public GeneralData ReadGeneral() throws IOException
-    {
+    public GeneralData ReadGeneral() throws IOException {
         Vector<String> lines = GetLines(m_FilePathG);
 
-        for(int i = 0; i < lines.size(); ++i)
-        {
-            switch(i)
-            {
+        for (int i = 0; i < lines.size(); ++i) {
+            switch (i) {
                 case 0:
                     m_GeneralData.CurrOneTimeExpCount = Integer.parseInt(lines.get(i));
                     break;
@@ -261,7 +266,7 @@ public class FileManager {
                     m_GeneralData.CurrMonthlyTakCount = Integer.parseInt(lines.get(i));
                     break;
                 case 4:
-                    m_GeneralData.userID  = Integer.parseInt(lines.get(i));
+                    m_GeneralData.userID = Integer.parseInt(lines.get(i));
                     break;
                 case 5:
                     m_GeneralData.groupID = Integer.parseInt(lines.get(i));
@@ -272,6 +277,16 @@ public class FileManager {
                 default:
                     break;
             }
+        }
+
+        try
+        {
+            TextView textView = HomeFragment.mRoot.findViewById(R.id.lblStatus);
+            textView.setText("Awaiting User Input...");
+        }
+        catch(Exception e)
+        {
+
         }
 
         return m_GeneralData;

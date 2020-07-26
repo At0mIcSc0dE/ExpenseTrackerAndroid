@@ -15,15 +15,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.exptrcandroid.MainActivity;
 import com.example.exptrcandroid.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import jcifs.smb.SmbFile;
+import jcifs.smb.SmbFileInputStream;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     static public EditText txtExpPrice;
     static public EditText txtExpName;
+    public TextView lblStatus;
+    static public View mRoot;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,7 +41,10 @@ public class HomeFragment extends Fragment {
 
         txtExpPrice = root.findViewById(R.id.txtExpPrice);
         txtExpName = root.findViewById(R.id.txtExpName);
+        lblStatus = root.findViewById(R.id.lblStatus);
 
+        mRoot = root;
         return root;
     }
+
 }

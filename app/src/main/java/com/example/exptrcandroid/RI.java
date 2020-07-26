@@ -1,5 +1,7 @@
 package com.example.exptrcandroid;
 
+import android.app.Activity;
+
 import java.io.IOException;
 
 public class RI implements Runnable

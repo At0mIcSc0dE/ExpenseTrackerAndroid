@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/navAdd"
         android:name="com.example.exptrcandroid.ui.home.HomeFragment"
-        android:label="Add Expense"
+        android:label="Add Items"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navShow"
         android:name="com.example.exptrcandroid.ui.gallery.GalleryFragment"
-        android:label="Expenses"
+        android:label="Show Items"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/navStatus"
         android:name="com.example.exptrcandroid.ui.slideshow.SlideshowFragment"
-        android:label="Stats"
+        android:label="Show Stats"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>
