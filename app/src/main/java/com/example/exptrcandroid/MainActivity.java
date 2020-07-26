@@ -1,13 +1,12 @@
 package com.example.exptrcandroid;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import com.example.exptrcandroid.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +23,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 import java.util.Calendar;
+
+import jcifs.smb.SmbFile;
+import jcifs.smb.SmbFileInputStream;
 
 
 /***************************************
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navAdd, R.id.navShow, R.id.navStatus)
                 .setDrawerLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -90,13 +93,51 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    private void AwaitConnection(String filePath) throws IOException
+    {
+        SmbFile file = new SmbFile(filePath);
+        SmbFileInputStream reader;
+
+        while(true)
+        {
+            try
+            {
+                reader = new SmbFileInputStream(file);
+                break;
+            }
+            catch (IOException e)
+            {
+            }
+        }
+
+        reader.close();
+    }
+
     public void OnAddExpClick(View view) throws IOException, InterruptedException
     {
         Calendar calendar = Calendar.getInstance();
         ExpenseData expenseData = new ExpenseData(HomeFragment.txtExpName.getText().toString() , Double.parseDouble(HomeFragment.txtExpPrice.getText().toString()), "", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
 
+        switch(rbChecked)
+        {
+            case 1:
+                AwaitConnection("smb://192.168.178.45/share/ExpTrc/OneTimeExpenses.exptrc");
+                break;
+            case 2:
+                AwaitConnection("smb://192.168.178.45/share/ExpTrc/MonthlyExpenses.exptrc");
+                break;
+            case 3:
+                AwaitConnection("smb://192.168.178.45/share/ExpTrc/OneTimeTakings.exptrc");
+                break;
+            case 4:
+                AwaitConnection("smb://192.168.178.45/share/ExpTrc/MonthlyTakings.exptrc");
+                break;
+        }
+
         ri.thread.join();
         ri.fm.WriteExpense(rbChecked, expenseData);
+        HomeFragment.txtExpName.setText("");
+        HomeFragment.txtExpPrice.setText("");
     }
 
     public void OnTxtExpNameClick(View view)
