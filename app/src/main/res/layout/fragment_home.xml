@@ -75,6 +75,7 @@
         tools:text="Name" />
 
     <EditText
+        android:digits="0123456789."
         android:id="@+id/txtExpPrice"
         android:layout_width="360dp"
         android:layout_height="60dp"
