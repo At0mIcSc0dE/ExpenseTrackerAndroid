@@ -143,12 +143,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnTxtExpNameClick(View view)
     {
-        HomeFragment.txtExpPrice.requestFocus();
+//        HomeFragment.txtExpPrice.requestFocus();
     }
 
     public void OnTxtExpPriceClick(View view)
     {
-        hideKeyboard(this);
+//        hideKeyboard(this);
     }
 
     public void OnRb1Click(View view)
