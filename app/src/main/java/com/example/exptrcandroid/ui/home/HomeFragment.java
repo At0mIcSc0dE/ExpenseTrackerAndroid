@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
     public TextView lblStatus;
     static public View mRoot;
     static public boolean setText = false;
+    static public boolean loaded = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment {
             lblStatus.setText("Awaiting Connection to File Server...");
 
         mRoot = root;
+        loaded = true;
         return root;
     }
 

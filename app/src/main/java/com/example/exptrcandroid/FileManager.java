@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.exptrcandroid.Debug.Timer;
 import com.example.exptrcandroid.ui.home.HomeFragment;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -56,7 +59,6 @@ public class FileManager {
     }
 
     private Vector<String> GetLines(String filePath) throws IOException {
-
         Vector<String> lines = new Vector<>();
         Vector<Character> charArr = new Vector<>();
 
@@ -70,11 +72,15 @@ public class FileManager {
             }
         }
 
-        int readChar = 0;
-        while ((readChar = reader.read()) != -1) {
-            if ((char) readChar == '\r')
+        byte[] arr = new byte[16384];
+        reader.read(arr);
+        for(byte b : arr)
+        {
+            if((char)(b & 0xFF) == '\r')
                 continue;
-            charArr.add((char) readChar);
+            else if(b == 0)
+                break;
+            charArr.add((char)(b & 0xFF));
         }
         reader.close();
 
@@ -94,7 +100,6 @@ public class FileManager {
                 }
             }
         }
-
         return lines;
     }
 
@@ -219,6 +224,14 @@ public class FileManager {
         WriteGeneral();
     }
 
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
     public GeneralData ReadGeneral() throws IOException {
         Vector<String> lines = GetLines(m_FilePathG);
 
@@ -251,6 +264,8 @@ public class FileManager {
         }
 
         try {
+            while(!HomeFragment.loaded) { }
+
             TextView textView = HomeFragment.mRoot.findViewById(R.id.lblStatus);
             textView.setText("Awaiting User Input...");
             HomeFragment.setText = true;
@@ -271,7 +286,7 @@ public class FileManager {
         sb.append(("" + m_GeneralData.CurrMonthlyTakCount + "\n").toCharArray());
         sb.append(("" + m_GeneralData.userID + "\n").toCharArray());
         sb.append(("" + m_GeneralData.groupID + "\n").toCharArray());
-        sb.append(("" + m_GeneralData.balance + "\n").toCharArray());
+        sb.append(("" + round(m_GeneralData.balance, 2) + "\n").toCharArray());
 
         writer.write(sb.toString().getBytes());
     }
@@ -449,8 +464,7 @@ public class FileManager {
         return MoneyGained;
     }
 
-    public void CheckNewMonth() throws IOException
-    {
+    public void CheckNewMonth() throws IOException {
         int lastExpMonth = 0;
         int lastTakMonth = 0;
         if(m_OneTimeExpData.containsKey(1))
@@ -464,8 +478,8 @@ public class FileManager {
         else
             return;
 
-        boolean alreadyCalled = false;
         Calendar calendar = Calendar.getInstance();
+        boolean alreadyCalled = false;
 
         if(m_OneTimeExpData.containsKey(1))
         {
@@ -482,7 +496,7 @@ public class FileManager {
                 alreadyCalled = true;
             }
         }
-        if(m_OneTimeTakData.containsKey(1))
+        if(m_OneTimeTakData.containsKey(1) && !alreadyCalled)
         {
             if(lastTakMonth != 0 && (lastTakMonth < (calendar.get(Calendar.MONTH) + 1) || (lastTakMonth == 12 && lastTakMonth > (calendar.get(Calendar.MONTH) + 1))))
             {
@@ -492,11 +506,8 @@ public class FileManager {
                 Write(m_FilePath3, m_OneTimeTakData);
                 m_GeneralData.CurrOneTimeExpCount = 0;
                 m_GeneralData.CurrOneTimeTakCount = 0;
-                if(!alreadyCalled)
-                {
-                    m_GeneralData.balance += CalculateIncome();
-                    m_GeneralData.balance -= CalculateExpenses();
-                }
+                m_GeneralData.balance += CalculateIncome();
+                m_GeneralData.balance -= CalculateExpenses();
             }
         }
         WriteGeneral();
