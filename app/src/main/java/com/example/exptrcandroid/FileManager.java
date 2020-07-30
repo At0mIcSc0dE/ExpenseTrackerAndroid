@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.exptrcandroid.ui.home.HomeFragment;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,8 +34,7 @@ public class FileManager {
 
     public GeneralData m_GeneralData;
 
-    public FileManager(String filePath1, String filePath2, String filePath3, String filePath4, String filePathG) throws IOException
-    {
+    public FileManager(String filePath1, String filePath2, String filePath3, String filePath4, String filePathG) throws IOException {
         m_FilePath1 = filePath1;
         m_FilePath2 = filePath2;
         m_FilePath3 = filePath3;
@@ -55,42 +55,33 @@ public class FileManager {
 
     }
 
-    private Vector<String> GetLines(String filePath) throws IOException
-    {
+    private Vector<String> GetLines(String filePath) throws IOException {
 
         Vector<String> lines = new Vector<>();
         Vector<Character> charArr = new Vector<>();
 
         SmbFile file = new SmbFile(filePath);
         SmbFileInputStream reader;
-        while(true)
-        {
-            try
-            {
+        while (true) {
+            try {
                 reader = new SmbFileInputStream(file);
                 break;
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
             }
         }
 
         int readChar = 0;
-        while((readChar = reader.read()) != -1)
-        {
-            if((char)readChar == '\r')
+        while ((readChar = reader.read()) != -1) {
+            if ((char) readChar == '\r')
                 continue;
-            charArr.add((char)readChar);
+            charArr.add((char) readChar);
         }
         reader.close();
 
-        for(int i = 0; i < charArr.size(); ++i)
-        {
+        for (int i = 0; i < charArr.size(); ++i) {
             Vector<Character> buffer = new Vector<>();
-            for(int j = i; j < charArr.size(); ++j)
-            {
-                if(charArr.get(j) == '\n')
-                {
+            for (int j = i; j < charArr.size(); ++j) {
+                if (charArr.get(j) == '\n') {
                     String vectorAsConcatenatedString = "";
                     for (Character c : buffer)
                         vectorAsConcatenatedString += c;
@@ -98,9 +89,7 @@ public class FileManager {
 
                     lines.add(vectorAsConcatenatedString);
                     break;
-                }
-                else
-                {
+                } else {
                     buffer.add(charArr.get(j));
                 }
             }
@@ -109,88 +98,72 @@ public class FileManager {
         return lines;
     }
 
-    public ExpenseData ReadExpense(int expID, int expType)
-    {
+    public ExpenseData ReadExpense(int expID, int expType) {
         ExpenseData expData = new ExpenseData("", 0, "", 0, 0, 0);
 
-        switch(expType)
-        {
+        switch (expType) {
             case 1:
-                try
-                {
+                try {
                     expData.Name = m_OneTimeExpData.get(expID).get(0);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     return expData;
                 }
 
-                expData.Price   = Double.parseDouble(m_OneTimeExpData.get(expID).get(1));
-                expData.Info    = m_OneTimeExpData.get(expID).get(2);
-                expData.Day     = Integer.parseInt(m_OneTimeExpData.get(expID).get(3));
-                expData.Month   = Integer.parseInt(m_OneTimeExpData.get(expID).get(4));
-                expData.Year    = Integer.parseInt(m_OneTimeExpData.get(expID).get(5));
+                expData.Price = Double.parseDouble(m_OneTimeExpData.get(expID).get(1));
+                expData.Info = m_OneTimeExpData.get(expID).get(2);
+                expData.Day = Integer.parseInt(m_OneTimeExpData.get(expID).get(3));
+                expData.Month = Integer.parseInt(m_OneTimeExpData.get(expID).get(4));
+                expData.Year = Integer.parseInt(m_OneTimeExpData.get(expID).get(5));
                 break;
 
             case 2:
-                try
-                {
+                try {
                     expData.Name = m_MonthlyExpData.get(expID).get(0);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     return expData;
                 }
 
-                expData.Price   = Double.parseDouble(m_MonthlyExpData.get(expID).get(1));
-                expData.Info    = m_MonthlyExpData.get(expID).get(2);
-                expData.Day     = Integer.parseInt(m_MonthlyExpData.get(expID).get(3));
-                expData.Month   = Integer.parseInt(m_MonthlyExpData.get(expID).get(4));
-                expData.Year    = Integer.parseInt(m_MonthlyExpData.get(expID).get(5));
+                expData.Price = Double.parseDouble(m_MonthlyExpData.get(expID).get(1));
+                expData.Info = m_MonthlyExpData.get(expID).get(2);
+                expData.Day = Integer.parseInt(m_MonthlyExpData.get(expID).get(3));
+                expData.Month = Integer.parseInt(m_MonthlyExpData.get(expID).get(4));
+                expData.Year = Integer.parseInt(m_MonthlyExpData.get(expID).get(5));
                 break;
 
             case 3:
-                try
-                {
+                try {
                     expData.Name = m_OneTimeTakData.get(expID).get(0);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     return expData;
                 }
 
-                expData.Price   = Double.parseDouble(m_OneTimeTakData.get(expID).get(1));
-                expData.Info    = m_OneTimeTakData.get(expID).get(2);
-                expData.Day     = Integer.parseInt(m_OneTimeTakData.get(expID).get(3));
-                expData.Month   = Integer.parseInt(m_OneTimeTakData.get(expID).get(4));
-                expData.Year    = Integer.parseInt(m_OneTimeTakData.get(expID).get(5));
+                expData.Price = Double.parseDouble(m_OneTimeTakData.get(expID).get(1));
+                expData.Info = m_OneTimeTakData.get(expID).get(2);
+                expData.Day = Integer.parseInt(m_OneTimeTakData.get(expID).get(3));
+                expData.Month = Integer.parseInt(m_OneTimeTakData.get(expID).get(4));
+                expData.Year = Integer.parseInt(m_OneTimeTakData.get(expID).get(5));
                 break;
 
             case 4:
-                try
-                {
+                try {
                     expData.Name = m_MonthlyTakData.get(expID).get(0);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     return expData;
                 }
 
-                expData.Price   = Double.parseDouble(m_MonthlyTakData.get(expID).get(1));
-                expData.Info    = m_MonthlyTakData.get(expID).get(2);
-                expData.Day     = Integer.parseInt(m_MonthlyTakData.get(expID).get(3));
-                expData.Month   = Integer.parseInt(m_MonthlyTakData.get(expID).get(4));
-                expData.Year    = Integer.parseInt(m_MonthlyTakData.get(expID).get(5));
+                expData.Price = Double.parseDouble(m_MonthlyTakData.get(expID).get(1));
+                expData.Info = m_MonthlyTakData.get(expID).get(2);
+                expData.Day = Integer.parseInt(m_MonthlyTakData.get(expID).get(3));
+                expData.Month = Integer.parseInt(m_MonthlyTakData.get(expID).get(4));
+                expData.Year = Integer.parseInt(m_MonthlyTakData.get(expID).get(5));
                 break;
         }
 
         return expData;
     }
 
-    public void WriteExpense(int expType, ExpenseData data) throws IOException
-    {
-        switch (expType)
-        {
+    public void WriteExpense(int expType, ExpenseData data) throws IOException {
+        switch (expType) {
             case 1:
                 m_OneTimeExpData = AddDataToMap(data, m_OneTimeExpData);
                 Write(m_FilePath1, m_OneTimeExpData);
@@ -219,10 +192,8 @@ public class FileManager {
         WriteGeneral();
     }
 
-    public void DeleteExpense(int expID, int expType) throws IOException
-    {
-        switch (expType)
-        {
+    public void DeleteExpense(int expID, int expType) throws IOException {
+        switch (expType) {
             case 1:
                 m_OneTimeExpData = RemoveFromMap(expID, m_OneTimeExpData);
                 --m_GeneralData.CurrOneTimeExpCount;
@@ -279,22 +250,18 @@ public class FileManager {
             }
         }
 
-        try
-        {
+        try {
             TextView textView = HomeFragment.mRoot.findViewById(R.id.lblStatus);
             textView.setText("Awaiting User Input...");
             HomeFragment.setText = true;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
         return m_GeneralData;
     }
 
-    public void WriteGeneral() throws IOException
-    {
+    public void WriteGeneral() throws IOException {
         SmbFileOutputStream writer = new SmbFileOutputStream(m_FilePathG);
 
         StringBuilder sb = new StringBuilder();
@@ -309,8 +276,7 @@ public class FileManager {
         writer.write(sb.toString().getBytes());
     }
 
-    public void UpdateIndices(int index, int expTime, boolean add) throws IOException
-    {
+    public void UpdateIndices(int index, int expTime, boolean add) throws IOException {
         if (!add) {
             switch (expTime) {
                 case 1:
@@ -326,15 +292,13 @@ public class FileManager {
         WriteGeneral();
 
         Vector<Integer> listOfAllIndices = new Vector<>();
-        for (int i = 0; i < m_GeneralData.CurrOneTimeExpCount; ++i)
-        {
+        for (int i = 0; i < m_GeneralData.CurrOneTimeExpCount; ++i) {
             listOfAllIndices.add(i);
         }
         Collections.reverse(listOfAllIndices);
 
         int nextID = 0;
-        switch (expTime)
-        {
+        switch (expTime) {
             case 1:
                 nextID = m_GeneralData.CurrOneTimeExpCount;
             case 2:
@@ -345,12 +309,9 @@ public class FileManager {
                 nextID = m_GeneralData.CurrMonthlyTakCount;
         }
 
-        if(!add)
-        {
-            for(int i = index; i < nextID; ++i)
-            {
-                switch (expTime)
-                {
+        if (!add) {
+            for (int i = index; i < nextID; ++i) {
+                switch (expTime) {
                     case 1:
                         RemoveFromMap(i, m_OneTimeExpData);
                         Write(m_FilePath1, m_OneTimeExpData);
@@ -365,13 +326,9 @@ public class FileManager {
                         Write(m_FilePath4, m_MonthlyTakData);
                 }
             }
-        }
-        else
-        {
-            for (int i = 0; i < nextID; ++i)
-            {
-                switch (expTime)
-                {
+        } else {
+            for (int i = 0; i < nextID; ++i) {
+                switch (expTime) {
                     case 1:
                         RemoveFromMap(i, m_OneTimeExpData);
                         Write(m_FilePath1, m_OneTimeExpData);
@@ -390,41 +347,34 @@ public class FileManager {
 
     }
 
-    private HashMap<Integer, Vector<String>> Read(String filePath) throws IOException
-    {
+    private HashMap<Integer, Vector<String>> Read(String filePath) throws IOException {
         HashMap<Integer, Vector<String>> data = new HashMap<>();
         Vector<String> lines = GetLines(filePath);
 
         int index = -1;
-        for(int i = 0; i < lines.size(); ++i)
-        {
-            if(lines.get(i).contains("#"))
-            {
+        for (int i = 0; i < lines.size(); ++i) {
+            if (lines.get(i).contains("#")) {
 //                index = Character.getNumericValue(lines.get(i).toCharArray()[1]);
                 StringBuilder sb = new StringBuilder(lines.get(i));
                 sb.replace(0, 1, "");
                 index = Integer.parseInt(sb.toString());
 
                 data.put(index, new Vector<String>());
-            }
-            else
-            {
+            } else {
+                if(index == -1) break;
+
                 data.get(index).add(lines.get(i));
             }
         }
         return data;
     }
 
-    private void Write(String filePath, Map<Integer, Vector<String>> data) throws IOException
-    {
+    private void Write(String filePath, Map<Integer, Vector<String>> data) throws IOException {
         SmbFileOutputStream writer = new SmbFileOutputStream(filePath);
-        for(int i = 1; i < data.size() + 1; ++i)
-        {
+        for (int i = 1; i < data.size() + 1; ++i) {
             writer.write(("#" + String.valueOf(i) + "\n").getBytes());
-            for(int j = 0; j < data.get(i).size(); ++j)
-            {
-                if(data.get(i).get(j) == "")
-                {
+            for (int j = 0; j < data.get(i).size(); ++j) {
+                if (data.get(i).get(j) == "") {
                     writer.write("NULL\n".getBytes());
                     continue;
                 }
@@ -435,13 +385,11 @@ public class FileManager {
         writer.close();
     }
 
-    public HashMap<Integer, Vector<String>> AddDataToMap(ExpenseData data, HashMap<Integer, Vector<String>> map)
-    {
+    public HashMap<Integer, Vector<String>> AddDataToMap(ExpenseData data, HashMap<Integer, Vector<String>> map) {
         int nextIndex = 1;
         HashMap<Integer, Vector<String>> temp = new HashMap<>();
 
-        for(int i = map.size(); i > 0; --i)
-        {
+        for (int i = map.size(); i > 0; --i) {
             temp.put(i + 1, map.get(i));
         }
         Vector<String> vec = new Vector<>();
@@ -457,19 +405,101 @@ public class FileManager {
         return temp;
     }
 
-    public HashMap<Integer, Vector<String>> RemoveFromMap(int expID, Map<Integer, Vector<String>> map)
-    {
+    public HashMap<Integer, Vector<String>> RemoveFromMap(int expID, Map<Integer, Vector<String>> map) {
         HashMap<Integer, Vector<String>> temp = new HashMap<>();
 
         map.remove(expID);
-        for(int i = 1; i < map.size() + 1; ++i)
-        {
-            if(i < expID)
+        for (int i = 1; i < map.size() + 1; ++i) {
+            if (i < expID)
                 temp.put(i, map.get(i));
             else
                 temp.put(i, map.get(i + 1));
         }
         return temp;
+    }
+
+    private double CalculateExpenses() {
+        double CurrentlySpentMoney = 0;
+
+        for(int i = 1; i <= m_GeneralData.CurrOneTimeExpCount; ++i)
+        {
+            CurrentlySpentMoney += Double.parseDouble(m_OneTimeExpData.get(i).get(1));
+        }
+
+        for(int i = 1; i <= m_GeneralData.CurrMonthlyExpCount; ++i)
+        {
+            CurrentlySpentMoney += Double.parseDouble(m_MonthlyExpData.get(i).get(1));
+        }
+        return CurrentlySpentMoney;
+    }
+
+    private double CalculateIncome() {
+        double MoneyGained = 0;
+
+        for(int i = 1; i <= m_GeneralData.CurrOneTimeTakCount; ++i)
+        {
+            MoneyGained += Double.parseDouble(m_OneTimeTakData.get(i).get(1));
+        }
+
+        for(int i = 1; i <= m_GeneralData.CurrMonthlyTakCount; ++i)
+        {
+            MoneyGained += Double.parseDouble(m_MonthlyTakData.get(i).get(1));
+        }
+
+        return MoneyGained;
+    }
+
+    public void CheckNewMonth() throws IOException
+    {
+        int lastExpMonth = 0;
+        int lastTakMonth = 0;
+        if(m_OneTimeExpData.containsKey(1))
+        {
+            lastExpMonth = Integer.parseInt(m_OneTimeExpData.get(1).get(4));
+        }
+        if(m_OneTimeTakData.containsKey(1))
+        {
+            lastTakMonth = Integer.parseInt(m_OneTimeTakData.get(1).get(4));
+        }
+        else
+            return;
+
+        boolean alreadyCalled = false;
+        Calendar calendar = Calendar.getInstance();
+
+        if(m_OneTimeExpData.containsKey(1))
+        {
+            if(lastExpMonth != 0 && (lastExpMonth < (calendar.get(Calendar.MONTH) + 1) || (lastExpMonth == 12 & lastExpMonth > (calendar.get(Calendar.MONTH) + 1))))
+            {
+                m_OneTimeExpData.clear();
+                m_OneTimeTakData.clear();
+                Write(m_FilePath1, m_OneTimeExpData);
+                Write(m_FilePath3, m_OneTimeTakData);
+                m_GeneralData.CurrOneTimeExpCount = 0;
+                m_GeneralData.CurrOneTimeTakCount = 0;
+                m_GeneralData.balance += CalculateIncome();
+                m_GeneralData.balance -= CalculateExpenses();
+                alreadyCalled = true;
+            }
+        }
+        if(m_OneTimeTakData.containsKey(1))
+        {
+            if(lastTakMonth != 0 && (lastTakMonth < (calendar.get(Calendar.MONTH) + 1) || (lastTakMonth == 12 && lastTakMonth > (calendar.get(Calendar.MONTH) + 1))))
+            {
+                m_OneTimeExpData.clear();
+                m_OneTimeTakData.clear();
+                Write(m_FilePath1, m_OneTimeExpData);
+                Write(m_FilePath3, m_OneTimeTakData);
+                m_GeneralData.CurrOneTimeExpCount = 0;
+                m_GeneralData.CurrOneTimeTakCount = 0;
+                if(!alreadyCalled)
+                {
+                    m_GeneralData.balance += CalculateIncome();
+                    m_GeneralData.balance -= CalculateExpenses();
+                }
+            }
+        }
+        WriteGeneral();
     }
 
 }

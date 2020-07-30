@@ -132,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ri.thread.join();
+
+        // Check if new month has begun
+        ri.fm.CheckNewMonth();
+
         ri.fm.WriteExpense(rbChecked, expenseData);
         HomeFragment.txtExpName.setText("");
         HomeFragment.txtExpPrice.setText("");
