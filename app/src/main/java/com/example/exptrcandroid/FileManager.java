@@ -283,6 +283,7 @@ public class FileManager {
         {
             TextView textView = HomeFragment.mRoot.findViewById(R.id.lblStatus);
             textView.setText("Awaiting User Input...");
+            HomeFragment.setText = true;
         }
         catch(Exception e)
         {

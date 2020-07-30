@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
     static public EditText txtExpName;
     public TextView lblStatus;
     static public View mRoot;
-
+    static public boolean setText = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +42,10 @@ public class HomeFragment extends Fragment {
         txtExpPrice = root.findViewById(R.id.txtExpPrice);
         txtExpName = root.findViewById(R.id.txtExpName);
         lblStatus = root.findViewById(R.id.lblStatus);
-        lblStatus.setText("Awaiting Connection to File Server...");
+        if(setText)
+            lblStatus.setText("Awaiting User Input...");
+        else
+            lblStatus.setText("Awaiting Connection to File Server...");
 
         mRoot = root;
         return root;
